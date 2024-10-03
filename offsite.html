@@ -167,7 +167,7 @@
             return;
         }
 
-        fetch(`https://lastofus-dbww.onrender.com/check-approval-status?username=${username}`)
+        fetch(`https://geolocation-zmi9.onrender.com/check-approval-status?username=${username}`)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -206,7 +206,7 @@
             currentLocation: userMarker ? userMarker.getPosition().toJSON() : null
         };
 
-        fetch('https://lastofus-dbww.onrender.com/offsite-request', {
+        fetch('https://geolocation-zmi9.onrender.com/offsite-request', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
