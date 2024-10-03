@@ -82,6 +82,9 @@
     </style>
 </head>
 <body>
+    <div class="header">
+        <img src="Group 33.png" alt="Home" onclick="redirecthome()" >
+    </div>
     <div class="container">
         <h1>Employee Details</h1>
         <table id="employeeTable">
@@ -101,6 +104,9 @@
     </div>
 
     <script>
+         function redirecthome(){
+        window.location.href = 'index1.html'
+    }
         function fetchEmployeeDetails() {
             const username = localStorage.getItem('username'); 
             if (!username) {
