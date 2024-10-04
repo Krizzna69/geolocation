@@ -149,6 +149,30 @@ app.post('/admin/approve-request', async (req, res) => {
   }
 });
 
+app.post('/admin/disapprove-request', async (req, res) => {
+  try {
+    const { requestId } = req.body;
+
+    if (!requestId) {
+      return res.status(400).json({ success: false, message: 'Request ID is required' });
+    }
+
+    const offsiteRequest = await OffsiteRequest.findById(requestId);
+
+    if (!offsiteRequest) {
+      return res.status(404).json({ success: false, message: 'Offsite request not found' });
+    }
+
+    offsiteRequest.isApproved = false; // Disapprove the request
+    await offsiteRequest.save();
+
+    res.status(200).json({ success: true, message: 'Offsite request disapproved successfully' });
+  } catch (error) {
+    console.error('Error disapproving request:', error);
+    res.status(500).json({ success: false, message: 'Failed to disapprove request' });
+  }
+});
+
 
 
 // Sign In endpoint
