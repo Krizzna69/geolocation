@@ -201,6 +201,8 @@
     // Capture both lat and lng
     const currentLocation = userMarker ? userMarker.getPosition().toJSON() : null;
 
+    console.log('Current Location:', currentLocation); // Log the current location
+
     const offsiteData = {
         fromTime,
         leavingTime,
@@ -208,6 +210,8 @@
         username: localStorage.getItem('username'),
         currentLocation: currentLocation ? { lat: currentLocation.lat, lng: currentLocation.lng } : null
     };
+
+    console.log('Offsite Data:', offsiteData); // Log the data being sent
 
     fetch('https://geolocation-zmi9.onrender.com/offsite-request', {
         method: 'POST',
