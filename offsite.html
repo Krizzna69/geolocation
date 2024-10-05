@@ -198,43 +198,54 @@
         return;
     }
 
-    // Capture both lat and lng
-    const currentLocation = userMarker ? userMarker.getPosition().toJSON() : null;
+    // Get current location when submitting the form
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            const currentLocation = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
 
-    console.log('Current Location:', currentLocation);
-    
+            console.log('Current Location:', currentLocation);
 
-    const offsiteData = {
-        fromTime,
-        leavingTime,
-        location,
-        username: localStorage.getItem('username'),
-        currentLocation: currentLocation ? { lat: currentLocation.lat, lng: currentLocation.lng } : null
-    };
+            const offsiteData = {
+                fromTime,
+                leavingTime,
+                location,
+                username: localStorage.getItem('username'),
+                currentLocation
+            };
 
-    console.log('Offsite Data:', offsiteData); // Log the data being sent
+            console.log('Offsite Data:', offsiteData); // Log the data being sent
 
-    fetch('https://geolocation-zmi9.onrender.com/offsite-request', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(offsiteData),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-             // Log the current location
-            alert('Offsite work request submitted successfully!');
-        } else {
-            alert('Error: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Failed to submit offsite request');
-    });
+            fetch('https://geolocation-zmi9.onrender.com/offsite-request', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(offsiteData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Offsite work request submitted successfully!');
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to submit offsite request');
+            });
+        }, (error) => {
+            console.error('Geolocation error:', error);
+            alert('Unable to retrieve your location. Please try again.');
+        });
+    } else {
+        alert('Geolocation is not supported by this browser.');
+    }
 }
+
 
 
 </script>
