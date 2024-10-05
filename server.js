@@ -32,7 +32,6 @@ const offsiteRequestSchema = new mongoose.Schema({
   leavingTime: { type: Date, required: true },
   location: { type: String, required: true },
   currentLocation: { lat: Number, lng: Number },
-  submittedAt: { type: Date, default: Date.now },
   isApproved: { type: Boolean, default: null } // null = pending, true = approved, false = disapproved
 });
 const OffsiteRequest = mongoose.model('OffsiteRequest', offsiteRequestSchema);
