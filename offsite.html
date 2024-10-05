@@ -201,14 +201,14 @@
     // Capture both lat and lng
     const currentLocation = userMarker ? userMarker.getPosition().toJSON() : null;
 
-    console.log('Current Location:', currentLocation); // Log the current location
+    
 
     const offsiteData = {
         fromTime,
         leavingTime,
         location,
         username: localStorage.getItem('username'),
-        currentLocation: currentLocation ? { lat: currentLocation.lat, lon: currentLocation.lon } : null
+        currentLocation: currentLocation ? { lat: currentLocation.lat, lng: currentLocation.lng } : null
     };
 
     console.log('Offsite Data:', offsiteData); // Log the data being sent
@@ -223,6 +223,7 @@
     .then(response => response.json())
     .then(data => {
         if (data.success) {
+            console.log('Current Location:', currentLocation); // Log the current location
             alert('Offsite work request submitted successfully!');
         } else {
             alert('Error: ' + data.message);
