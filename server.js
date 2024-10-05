@@ -173,6 +173,26 @@ app.post('/admin/disapprove-request', async (req, res) => {
   }
 });
 
+app.post('/admin/delete-request', async (req, res) => {
+  try {
+      const { requestId } = req.body;
+
+      if (!requestId) {
+          return res.status(400).json({ success: false, message: 'Request ID is required' });
+      }
+
+      const deletedRequest = await OffsiteRequest.findByIdAndDelete(requestId);
+
+      if (!deletedRequest) {
+          return res.status(404).json({ success: false, message: 'Request not found' });
+      }
+
+      res.status(200).json({ success: true, message: 'Request deleted successfully' });
+  } catch (error) {
+      console.error('Error deleting request:', error);
+      res.status(500).json({ success: false, message: 'Failed to delete request' });
+  }
+});
 
 
 // Sign In endpoint
